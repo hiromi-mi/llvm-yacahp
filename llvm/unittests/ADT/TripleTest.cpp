@@ -904,6 +904,11 @@ TEST(TripleTest, BitWidthPredicates) {
   EXPECT_FALSE(T.isArch32Bit());
   EXPECT_TRUE(T.isArch64Bit());
   EXPECT_TRUE(T.isRISCV());
+
+  T.setArch(Triple::cahp);
+  EXPECT_FALSE(T.isArch16Bit());
+  EXPECT_TRUE(T.isArch32Bit());
+  EXPECT_FALSE(T.isArch64Bit());
 }
 
 TEST(TripleTest, BitWidthArchVariants) {
@@ -1271,6 +1276,12 @@ TEST(TripleTest, getOSVersion) {
   EXPECT_TRUE(T.getEnvironment() == Triple::MacABI);
   EXPECT_TRUE(T.isMacCatalystEnvironment());
   EXPECT_FALSE(T.isSimulatorEnvironment());
+
+  T = Triple("cahp-unknown-unknown");
+  EXPECT_EQ(Triple::cahp, T.getArch());
+  EXPECT_EQ(Triple::UnknownVendor, T.getVendor());
+  EXPECT_EQ(Triple::UnknownOS, T.getOS());
+  EXPECT_EQ(Triple::UnknownEnvironment, T.getEnvironment());
 }
 
 TEST(TripleTest, FileFormat) {
