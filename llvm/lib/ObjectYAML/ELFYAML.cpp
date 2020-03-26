@@ -221,6 +221,7 @@ void ScalarEnumerationTraits<ELFYAML::ELF_EM>::enumeration(
   ECase(EM_RISCV);
   ECase(EM_LANAI);
   ECase(EM_BPF);
+  ECase(EM_CAHP);
 #undef ECase
   IO.enumFallback<Hex16>(Value);
 }
@@ -427,6 +428,14 @@ void ScalarBitSetTraits<ELFYAML::ELF_EF>::bitset(IO &IO,
     BCase(EF_AMDGPU_SRAM_ECC);
     break;
   case ELF::EM_X86_64:
+    break;
+  case ELF::EM_CAHP:
+    BCase(EF_CAHP_RVC);
+    BCaseMask(EF_CAHP_FLOAT_ABI_SOFT, EF_CAHP_FLOAT_ABI);
+    BCaseMask(EF_CAHP_FLOAT_ABI_SINGLE, EF_CAHP_FLOAT_ABI);
+    BCaseMask(EF_CAHP_FLOAT_ABI_DOUBLE, EF_CAHP_FLOAT_ABI);
+    BCaseMask(EF_CAHP_FLOAT_ABI_QUAD, EF_CAHP_FLOAT_ABI);
+    BCase(EF_CAHP_RVE);
     break;
   default:
     llvm_unreachable("Unsupported architecture");
@@ -656,6 +665,9 @@ void ScalarEnumerationTraits<ELFYAML::ELF_REL>::enumeration(
     break;
   case ELF::EM_PPC64:
 #include "llvm/BinaryFormat/ELFRelocs/PowerPC64.def"
+    break;
+  case ELF::EM_CAHP:
+#include "llvm/BinaryFormat/ELFRelocs/CAHP.def"
     break;
   default:
     // Nothing to do.

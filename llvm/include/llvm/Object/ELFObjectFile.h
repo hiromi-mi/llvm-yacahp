@@ -1080,6 +1080,8 @@ StringRef ELFObjectFile<ELFT>::getFileFormatName() const {
       return "ELF32-ppc";
     case ELF::EM_RISCV:
       return "ELF32-riscv";
+    case ELF::EM_CAHP:
+      return "elf32-cahp";
     case ELF::EM_SPARC:
     case ELF::EM_SPARC32PLUS:
       return "ELF32-sparc";
@@ -1137,6 +1139,8 @@ template <class ELFT> Triple::ArchType ELFObjectFile<ELFT>::getArch() const {
     return Triple::hexagon;
   case ELF::EM_LANAI:
     return Triple::lanai;
+  case ELF::EM_CAHP:
+    return Triple::cahp;
   case ELF::EM_MIPS:
     switch (EF.getHeader()->e_ident[ELF::EI_CLASS]) {
     case ELF::ELFCLASS32:
